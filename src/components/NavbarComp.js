@@ -12,12 +12,13 @@ import Contact from "../pages/contact";
 import Home from "../pages/home";
 import Recipes from "../pages/recipes";
 import NotFound from "../pages/notfound";
+import LoginModal from "./LoginModal";
 
 export const NavbarComp = () => {
     return (
       <BrowserRouter>
         <div>
-          <Navbar bg="dark" variant={"dark"} expand="lg">
+          <Navbar bg="light" variant={"light"} expand="lg">
             <Container fluid>
               <Navbar.Brand href as={Link} to={"/"}>SweetCake</Navbar.Brand>
               <Navbar.Toggle aria-controls="navbarScroll" />
@@ -41,13 +42,8 @@ export const NavbarComp = () => {
                   </Nav.Link>
                 </Nav>
                 <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
+                  {/* <Button variant="outline-success">Login</Button> */}
+                  <LoginModal/>
                 </Form>
               </Navbar.Collapse>
             </Container>

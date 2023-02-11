@@ -11,6 +11,7 @@ import About from "./About";
 import Contact from "./Contact";
 import Home from "./Home";
 import Recipes from "./Recipes";
+import NotFound from "./NotFound";
 
 export const NavbarComp = () => {
     return (
@@ -18,7 +19,7 @@ export const NavbarComp = () => {
         <div>
           <Navbar bg="dark" variant={"dark"} expand="lg">
             <Container fluid>
-              <Navbar.Brand href="#">SweetCake</Navbar.Brand>
+              <Navbar.Brand href as={Link} to={"/"}>SweetCake</Navbar.Brand>
               <Navbar.Toggle aria-controls="navbarScroll" />
               <Navbar.Collapse id="navbarScroll">
                 <Nav
@@ -58,6 +59,10 @@ export const NavbarComp = () => {
             <Route path="/contact"element={<Contact/>}></Route>
             <Route path="/home" element={<Home/>}></Route>
             <Route path="/recipes" element={<Recipes/>}></Route>
+            <Route exact path="/" element={<Home/>} />
+            <Route path='*' element={<NotFound/>}/>
+           
+            
             </Routes>
         </div>
  

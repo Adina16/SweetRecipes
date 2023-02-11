@@ -7,11 +7,11 @@ import {
   Button,
 } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import About from "./About";
-import Contact from "./Contact";
-import Home from "./Home";
-import Recipes from "./Recipes";
-import NotFound from "./NotFound";
+import About from "../pages/about";
+import Contact from "../pages/contact";
+import Home from "../pages/home";
+import Recipes from "../pages/recipes";
+import NotFound from "../pages/notfound";
 
 export const NavbarComp = () => {
     return (
@@ -55,7 +55,7 @@ export const NavbarComp = () => {
         </div>
         <div>
         <Routes>
-            <Route path="/about" element={<About/>}></Route>
+            <Route path="/about" element={<About />}></Route>
             <Route path="/contact"element={<Contact/>}></Route>
             <Route path="/home" element={<Home/>}></Route>
             <Route path="/recipes" element={<Recipes/>}></Route>

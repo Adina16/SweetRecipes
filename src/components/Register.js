@@ -1,14 +1,7 @@
 import Form from "react-bootstrap/Form";
-import React, { useState } from "react";
 
-const Register = () => {
-  let [authMode, setAuthMode] = useState("signup");
+const Register = ({changeMode}) => {
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signup" ? "signin" : "signup");
-  };
-
-  
   return (
     <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -19,9 +12,7 @@ const Register = () => {
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" />
       </Form.Group>
-      <span  onClick={changeAuthMode}>
-        Sign In
-      </span>
+        <span onClick={() => changeMode()}>Sign In</span>
     </Form>
   );
 };

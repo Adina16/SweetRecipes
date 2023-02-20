@@ -46,7 +46,7 @@ function LoginModal() {
               </p>
             </>
           ) : (
-            <Register />
+            <Register changeMode={() => changeAuthMode()} />
           )}
         </Modal.Body>
         <Modal.Footer>

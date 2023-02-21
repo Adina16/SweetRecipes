@@ -28,7 +28,7 @@ function LoginModal() {
             <>
               <Form>
                 <Form.Group className="mb-3" controlId="EmailInput">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Email address:</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="name@example.com"
@@ -36,24 +36,24 @@ function LoginModal() {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="PasswordInput">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password:</Form.Label>
                   <Form.Control type="password" />
                 </Form.Group>
               </Form>
               <p>
                 Nu ai cont?{" "}
-                <span onClick={changeAuthMode}>Inregistreaza-te</span>
+                <span className="text-primary" onClick={changeAuthMode}>Inregistreaza-te</span>
               </p>
+              <Button variant="primary" onClick={handleClose}>
+            Login
+          </Button>
             </>
           ) : (
             <Register changeMode={() => changeAuthMode()} />
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Login
-          </Button>
-        </Modal.Footer>
+        
+         
       </Modal>
     </>
   );

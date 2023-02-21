@@ -3,7 +3,7 @@
     header("Access-Control-Allow-Headers: *");
     header('Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,OPTIONS');
 
-    $db_conn = mysqli_connect("localhost", "myuser", "123", "webdev");
+    $db_conn = mysqli_connect("localhost", "myuser", "123", "sweetrecipes");
     // Check connection
     if($db_conn === false){
         die("ERROR: Could not connect. " . mysqli_connect_error());

@@ -9,7 +9,7 @@ const Register = ({ changeMode }) => {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
 
   const [errors, setError] = useState({});
@@ -80,12 +80,13 @@ const Register = ({ changeMode }) => {
             <Form.Label>Confirm password:</Form.Label>
             <Form.Control
               type="password"
-              name="confirmPassword"
-              // value={values.confirmPassword}
+              name="confirm_password"
+              value={values.confirm_password}
+              onChange={handleChange}
             />
-            {/* {errors.confirmPassword && (
-              <span className="text-danger">{errors.confirmPassword}</span>
-            )} */}
+            {errors.confirm_password && (
+              <span className="text-danger">{errors.confirm_password}</span>
+            )}
           </Form.Group>
           <Button variant="primary" onClick={handleFormSubmit}>
             Sign Up

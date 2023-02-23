@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import validation from "./validation";
 import SingupFormSucces from "./SignupFormSuccess";
+import { json } from "react-router-dom";
 
 const Register = ({ changeMode }) => {
   const [values, setValues] = useState({
@@ -15,10 +16,12 @@ const Register = ({ changeMode }) => {
   const [errors, setError] = useState({});
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setApiError] = useState(null);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && dataIsCorrect) {
-      setFormIsSubmitted(true);
+      postPutEvent();
     }
   }, [errors]);
 
@@ -27,7 +30,6 @@ const Register = ({ changeMode }) => {
       ...values,
       [event.target.name]: event.target.value,
     });
-    console.log("values", values);
   };
 
   const handleFormSubmit = (event) => {
@@ -36,6 +38,25 @@ const Register = ({ changeMode }) => {
     setDataIsCorrect(true);
   };
 
+  const postPutEvent = () => {
+    const url = "http://localhost:8080/Users/addUser.php";
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:  JSON.stringify(values)
+  };
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.success){
+          setFormIsSubmitted(true);
+        }else{
+        }
+  
+      })
+      .catch((e) => {
+      });
+  };
   return (
     <>
       {!formIsSubmitted ? (

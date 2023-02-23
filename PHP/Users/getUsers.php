@@ -1,6 +1,7 @@
 <?php
 require '../server.php';
 $allUsers = mysqli_query($db_conn,"SELECT * FROM users");
+echo json_encode($allUsers);
 if(mysqli_num_rows($allUsers) > 0){
     while($row = mysqli_fetch_array($allUsers)){
         $viewjson["id"] = $row['id'];

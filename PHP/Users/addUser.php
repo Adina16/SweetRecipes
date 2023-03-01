@@ -22,10 +22,9 @@ if(isset($data->username)
 		echo json_encode(["success"=>true,"insertid"=>$last_id]);
 		return;
     }else{
-        echo json_encode(["success"=>false,"msg"=>"Server Problem. Please Try Again","data"=>$add]);
+        echo json_encode(["success"=>false,"msg"=>"Acest user exista deja!","data"=>$add]);
 		return;
     } 
-
 } else{
     echo json_encode(["success"=>false,"msg"=>"Please fill all the required fields!", "data"=>$data]);
 	return;

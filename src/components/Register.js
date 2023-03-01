@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import validation from "./validation";
 import SingupFormSucces from "./SignupFormSuccess";
-import { json } from "react-router-dom";
+import MyError from "./MyError";
 
 const Register = ({ changeMode }) => {
   const [values, setValues] = useState({
@@ -39,6 +39,7 @@ const Register = ({ changeMode }) => {
   };
 
   const postPutEvent = () => {
+
     const url = "http://localhost:8080/Users/addUser.php";
     const requestOptions = {
       method: 'POST',
@@ -49,12 +50,13 @@ const Register = ({ changeMode }) => {
       .then((response) => response.json())
       .then((data) => {
         if(data.success){
-          setFormIsSubmitted(true);
-        }else{
-        }
-  
+          setFormIsSubmitted(true);      
+        }else{ 
+          setApiError(data.msg)   
+        } 
       })
       .catch((e) => {
+        
       });
   };
   return (
@@ -109,6 +111,7 @@ const Register = ({ changeMode }) => {
               <span className="text-danger">{errors.confirm_password}</span>
             )}
           </Form.Group>
+          {error && <MyError error={error}/> }
           <Button variant="primary" onClick={handleFormSubmit}>
             Sign Up
           </Button>{" "}

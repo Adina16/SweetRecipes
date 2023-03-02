@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import validation from "./validation";
 import SingupFormSucces from "./SignupFormSuccess";
 import MyError from "./MyError";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Register = ({ changeMode }) => {
   const [values, setValues] = useState({
@@ -16,7 +17,7 @@ const Register = ({ changeMode }) => {
   const [errors, setError] = useState({});
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setApiError] = useState(null);
 
   useEffect(() => {
@@ -39,24 +40,25 @@ const Register = ({ changeMode }) => {
   };
 
   const postPutEvent = () => {
-
+    setLoading(true);
     const url = "http://localhost:8080/Users/addUser.php";
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:  JSON.stringify(values)
-  };
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    };
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if(data.success){
-          setFormIsSubmitted(true);      
-        }else{ 
-          setApiError(data.msg)   
-        } 
+        if (data.success) {
+          setFormIsSubmitted(true);
+        } else {
+          setApiError(data.msg);
+        }
+        setLoading(false);
       })
       .catch((e) => {
-        
+        setLoading(false);
       });
   };
   return (
@@ -111,12 +113,21 @@ const Register = ({ changeMode }) => {
               <span className="text-danger">{errors.confirm_password}</span>
             )}
           </Form.Group>
-          {error && <MyError error={error}/> }
-          <Button variant="primary" onClick={handleFormSubmit}>
-            Sign Up
-          </Button>{" "}
-          <span className="text-primary" onClick={() => changeMode()}>
-            Sign In
+          {error && <MyError error={error} />}
+          <Button
+            variant="primary"
+            onClick={handleFormSubmit}
+            disabled={loading}
+          >
+            {loading ? <LoadingSpinner /> : <span>Sign Up</span>}
+          </Button>
+          <span> Ai deja cont? Logheaza-te </span>
+          <span
+            className="text-primary"
+            role="button"
+            onClick={() => changeMode()}
+          >
+            aici
           </span>
         </Form>
       ) : (

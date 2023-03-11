@@ -1,20 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
 import Register from "./Register";
+import loginValidation from "../utils/LoginValidation";
+
+
 
 function LoginModal() {
+  const [user, setUser] = useState({ username:'', password:'',});
   const [show, setShow] = useState(false);
   let [authMode, setAuthMode] = useState("signin");
+  let navigate = useNavigate();
+
+  const [errors, setError] = useState({});
+  const [dataIsCorrect, setDataIsCorrect] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && dataIsCorrect) {
+      postPutEvent();
+    }
+  }, [errors]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  
+  const handleChange = (e) => {
+    setUser({
+      ...user, 
+      [e.target.name]: e.target.value,
+    });
+
+    console.log('here', errors)
+  };
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
 
+  const submitForm = (e) => {
+    e.preventDefault();
+    setError(loginValidation(user));
+    setDataIsCorrect(true);
+    // const sendData = {
+    //   username:user.username,
+    //   password:user.password
+    // }
+    // console.log('aici', sendData)
+  }
+  const postPutEvent = () => {
+    // setLoading(true);
+    const url = "http://localhost:8080/Users/login.php";
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    };
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // setFormIsSubmitted(true);
+        } else {
+          // setApiError(data.msg);
+        }
+        // setLoading(false);
+      })
+      .catch((e) => {
+        // setLoading(false);
+      });
+  };
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
@@ -26,34 +83,48 @@ function LoginModal() {
         <Modal.Body>
           {authMode === "signin" ? (
             <>
-              <Form>
-                <Form.Group className="mb-3" controlId="EmailInput">
-                  <Form.Label>Email address:</Form.Label>
+              <Form onSubmit={submitForm}>
+                <Form.Group className="mb-3" controlId="UserNameInput">
+                  <Form.Label>Username:</Form.Label>
                   <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
+                    type="text"
+                    name="username"
+                    value={user.username}
+                    onChange={handleChange}
+                    placeholder="Name123"
                     autoFocus
                   />
+                           {errors.username && (
+              <p className="text-danger">{errors.username}</p>
+            )}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="PasswordInput">
                   <Form.Label>Password:</Form.Label>
-                  <Form.Control type="password" />
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    value={user.password}
+                    onChange={handleChange}
+                  />
+          {errors.password && (
+              <p className="text-danger">{errors.password}</p>
+            )}
                 </Form.Group>
               </Form>
               <p>
                 Nu ai cont?{" "}
-                <span className="text-primary" onClick={changeAuthMode}>Inregistreaza-te</span>
+                <span className="text-primary" onClick={changeAuthMode}>
+                  Inregistreaza-te
+                </span>
               </p>
-              <Button variant="primary" onClick={handleClose}>
-            Login
-          </Button>
+              <Button variant="primary" onClick={submitForm}>
+                Login
+              </Button>
             </>
           ) : (
             <Register changeMode={() => changeAuthMode()} />
           )}
         </Modal.Body>
-        
-         
       </Modal>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
-import validation from "./validation";
+import validation from "../utils/validation";
 import SingupFormSucces from "./SignupFormSuccess";
 import MyError from "./MyError";
 import LoadingSpinner from "./LoadingSpinner";

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { useNavigate } from "react-router-dom";
 import Register from "./Register";
 import loginValidation from "../utils/LoginValidation";
+import MyError from "./MyError";
 
 
 
@@ -12,10 +12,10 @@ function LoginModal() {
   const [user, setUser] = useState({ username:'', password:'',});
   const [show, setShow] = useState(false);
   let [authMode, setAuthMode] = useState("signin");
-  let navigate = useNavigate();
 
   const [errors, setError] = useState({});
   const [dataIsCorrect, setDataIsCorrect] = useState(false);
+  const [error, setApiError] = useState(null);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && dataIsCorrect) {
@@ -62,10 +62,12 @@ function LoginModal() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          // setFormIsSubmitted(true);
+          setFormIsSubmitted(true);
+          setShow(false)
         } else {
-          // setApiError(data.msg);
+          setApiError(data.msg);
         }
+        console.log('erorr', data.msg)
         // setLoading(false);
       })
       .catch((e) => {
@@ -84,6 +86,7 @@ function LoginModal() {
           {authMode === "signin" ? (
             <>
               <Form onSubmit={submitForm}>
+
                 <Form.Group className="mb-3" controlId="UserNameInput">
                   <Form.Label>Username:</Form.Label>
                   <Form.Control
@@ -110,6 +113,7 @@ function LoginModal() {
               <p className="text-danger">{errors.password}</p>
             )}
                 </Form.Group>
+                {error && <MyError error={error} />}
               </Form>
               <p>
                 Nu ai cont?{" "}
